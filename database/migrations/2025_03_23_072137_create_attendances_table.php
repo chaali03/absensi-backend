@@ -1,34 +1,40 @@
 <?php
 
-namespace App\Models;
+namespace Database\Seeders;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
-class User extends Authenticatable
+class UserSeeder extends Seeder
 {
-    use HasFactory, Notifiable;
-
-    protected $fillable = ['name', 'email', 'password', 'role'];
-
-    protected $hidden = ['password'];
-
-    public function attendances()
+    public function run(): void
     {
-        return $this->hasMany(Attendance::class);
-    }
-}
-
-class Attendance extends Model
-{
-    use HasFactory;
-
-    protected $fillable = ['user_id', 'date', 'is_present', 'reason'];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        User::insert([
+            [
+                'name' => 'Sekretaris Kelas',
+                'email' => 'sekretaris@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'sekretaris',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Murid 1',
+                'email' => 'murid1@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'murid',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Wali Kelas',
+                'email' => 'walikelas@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'wali_kelas',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
