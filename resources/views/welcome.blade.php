@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -275,7 +274,6 @@
             <div class="h-14.5 hidden lg:block"></div>
         @endif
     </body>
-=======
 <html>
 <head>
     <title>Data Absensi</title>
@@ -288,5 +286,4 @@
         @endforeach
     </ul>
 </body>
->>>>>>> 5c2bba03ed490e07cdda0061a5ee32b07d8cdffd
 </html>
