@@ -1,33 +1,34 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id'); // ID pengguna
-            $table->timestamp('check_in')->nullable(); // Waktu masuk
-            $table->timestamp('check_out')->nullable(); // Waktu keluar
-            $table->timestamps();
+    use HasFactory, Notifiable;
 
-            // Tambahkan foreign key jika ada tabel users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
-    }
+    protected $fillable = ['name', 'email', 'password', 'role'];
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    protected $hidden = ['password'];
+
+    public function attendances()
     {
-        Schema::dropIfExists('attendances');
+        return $this->hasMany(Attendance::class);
     }
-};
+}
+
+class Attendance extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'date', 'is_present', 'reason'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
